@@ -1,61 +1,68 @@
 <?php
+   
+    session_cache_limiter( 'nocache' );
+    header( 'Expires: ' . gmdate( 'r', 0 ) );
+    header( 'Content-type: application/json' );
 
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
-//required files
-require 'phpmailer-master/src/Exception.php';
-require 'phpmailer-master/src/PHPMailer.php';
-require 'phpmailer-master/src/SMTP.php';
+    $to         = 'etudsouleumane90@gmail.com'; //put your email here
 
-//Create an instance; passing `true` enables exceptions
-if (isset($_POST["send"])) {
+    $email_template = 'simple.html';
 
-  $name=isset($_POST['name'])?$_POST['name']:"";
-  $email=isset($_POST['email'])?$_POST['email']:"";
-  $number=isset($_POST['number'])?$_POST['number']:"";
-  $message=isset($_POST['message'])?$_POST['message']:"";
+    $subject    = strip_tags($_POST['subject']);
+    $email       = strip_tags($_POST['email']);
+    $phone      = strip_tags($_POST['phone']);
+    $name       = strip_tags($_POST['name']);
+    $message    = nl2br( htmlspecialchars($_POST['message'], ENT_QUOTES) );
+    $result     = array();
 
-  $suject = "Vous avez reçu un message de : ".$email;
 
-  $message = "
-  <p>Vous avez reçu un message de <strong>".$email."</strong></p>
-  <p><strong>Nom :</strong>".$name."</p>
-  <p><strong>number :</strong>".$number."</p>
-  <p><strong>message :</strong>".$message."</p>
-  ";
+    if(empty($name)){
 
-  $mail = new PHPMailer(true);
+        $result = array( 'response' => 'error', 'empty'=>'name', 'message'=>'<strong>Error!</strong> Name is empty.' );
+        echo json_encode($result );
+        die;
+    } 
 
-    //Server settings
-    $mail->isSMTP();                              //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;             //Enable SMTP authentication
-    $mail->Username   = 'souleymanekamara4@gmail.com';   //SMTP write your email
-    $mail->Password   = 'oimyyyxzbxrywdih';      //SMTP password
-    $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
-    $mail->Port       = 465;                                    
+    if(empty($email)){
 
-    //Recipients
-    $mail->setFrom( $_POST["email"], $_POST["name"]); // Sender Email and name
-    $mail->addAddress('etudsouleymane90@gmail.com');     //Add a recipient email  
-    $mail->addReplyTo($_POST["email"], $_POST["name"]); // reply to sender email
+        $result = array( 'response' => 'error', 'empty'=>'email', 'message'=>'<strong>Error!</strong> Email is empty.' );
+        echo json_encode($result );
+        die;
+    } 
 
-    //Content
-    $mail->isHTML(true);               //Set email format to HTML
-    $mail->Subject = "you have a new message from";   // email subject headings
-    $mail->Body    = $_POST["message"]; //email message
+    if(empty($message)){
 
-    // Success sent message alert
-    $mail->send();
-    echo
-    " 
-    <script> 
-     alert('Message was sent successfully!');
-     document.location.href = 'contact.html';
-    </script>
-    ";
-}
-?>
+         $result = array( 'response' => 'error', 'empty'=>'message', 'message'=>'<strong>Error!</strong> Message body is empty.' );
+         echo json_encode($result );
+         die;
+    }
+
+    $headers  = "From: " . $name . ' <' . $email . '>' . "\r\n";
+    $headers .= "Reply-To: ". $email . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+
+    $templateTags =  array(
+        '{{subject}}' => $subject,
+        '{{email}}'=>$email,
+        '{{message}}'=>$message,
+        '{{name}}'=>$name,
+        '{{phone}}'=>$phone
+        );
+
+
+    $templateContents = file_get_contents( dirname(__FILE__) . '/email-templates/'.$email_template);
+
+    $contents =  strtr($templateContents, $templateTags);
+
+    if ( mail( $to, $subject, $contents, $headers ) ) {
+        $result = array( 'response' => 'success', 'message'=>'<strong>Success!</strong> Mail Sent.' );
+    } else {
+        $result = array( 'response' => 'error', 'message'=>'<strong>Error!</strong> Cann\'t Send Mail.'  );
+    }
+
+    echo json_encode( $result );
+
+    die;
