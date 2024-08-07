@@ -723,7 +723,7 @@ textarea, select {
         .header-section .top-bar .header-right-bar .language .dropbar .dropbar-menu {
           position: relative;
           overflow: hidden;
-          max-height: 200px;
+          max-height: 90px;
           width: 130px;
           text-align: center;
           -webkit-transition: all 0.2s;
