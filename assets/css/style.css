@@ -1920,7 +1920,7 @@ textarea, select {
         Counting-Section STYLE 
 ============================================================ */
 .counting-section {
-  background: url(../images/counter-bg-1.png) no-repeat center;
+  background: url(../images/counter-bg-1.png), #001648 no-repeat center;
   background-size: cover;
   background-attachment: fixed; }
   @media only screen and (max-width: 991px) {
