@@ -23,7 +23,7 @@ jQuery(function ($) {
        var dots_visibility = $(this).siblings(".text-wrapper").find("span.dots");
        dots_visibility.html(dots_visibility.html() == '...' ? ' ' : '...')
        $('.text-wrapper > p.p1').contents().unwrap();
-       $(this).parent().find('.full-text').slideToggle('200');
+       $(this).parent().find('.full-text').slideToggle('100');
        $(this).html($(this).html() == 'Read less' ? 'Read more' : 'Read less');
    });
    //fin Read more

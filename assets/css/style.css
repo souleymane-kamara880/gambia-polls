@@ -346,7 +346,7 @@ button,
 .section-padding-about {
       padding: 60px 0; } }
 
-/* .section-padding-partners {
+.section-padding-partners {
   padding: 100px 0;
   background-color: #e7eef433; }
   @media only screen and (max-width: 991px) {
@@ -354,7 +354,7 @@ button,
   padding: 80px 0; } }
 @media only screen and (max-width: 767px) {
 .section-padding-partners {
-  padding: 60px 0; } } */
+  padding: 0px 0; } }
 
 .section-padding {
   padding: 100px 0; }
@@ -2843,7 +2843,7 @@ textarea, select {
         Secure-Section STYLE 
 ============================================================ */
 .secure-section {
-  background: url(../images/secure-bg.jpg) no-repeat center top;
+  background: url(../images/secure-bg.png) no-repeat center top;
   background-size: cover;
   background-attachment: fixed;
   padding: 80px 0; }
