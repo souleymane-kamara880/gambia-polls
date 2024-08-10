@@ -48,7 +48,7 @@
     text-align: right;
     padding: 10px 10px 10px 0;
 	background-color: #001648;
-	border: 1PX solid #e7e8e8;
+	/* border-bottom: 1PX solid #e7e8e8; */
     border-radius: 0;
 }
 
