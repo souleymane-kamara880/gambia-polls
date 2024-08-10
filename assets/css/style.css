@@ -1244,9 +1244,9 @@ textarea, select {
         line-height: 50px !important; } }
     @media only screen and (max-width: 767px) {
       .slider-section #rev_slider_1 .font-extra-bold {
-        font-size: 25px !important;
-        line-height: 40px !important;
-        margin: 0 0 9px !important; } }
+        font-size: 22px !important;
+        line-height: 15px !important;
+        margin: 0 0 9px 15px !important; } }
   .slider-section #rev_slider_1 .font-medium {
     font-size: 18px !important;
     font-weight: 500 !important;
@@ -1261,9 +1261,9 @@ textarea, select {
         margin: 0 0 9px !important; } }
     @media only screen and (max-width: 479px) {
       .slider-section #rev_slider_1 .font-medium {
-        font-size: 14px !important;
+        font-size: 11px !important;
         line-height: 18px !important;
-        margin: 30px 0 9px !important; } }
+        margin: 30px 0 9px 15px !important; } }
   .slider-section #rev_slider_1 .btn {
     font-size: 18px !important;
     border-radius: 0;
