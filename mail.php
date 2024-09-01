@@ -1,68 +1,24 @@
 <?php
-   
-    session_cache_limiter( 'nocache' );
-    header( 'Expires: ' . gmdate( 'r', 0 ) );
-    header( 'Content-type: application/json' );
+    if(isset($_POST['message'])) {
+        $message="Envoi depuis la page Contact du site contact@exemplesite.fr 
+        Nom : ".$_POST['name']." 
+        Email : ".$_POST['email']." 
+        Subject:".$_POST['subject']." 
+        Phone:".$_POST['number']." 
+        Message : ".$_POST['message'];
 
-
-    $to         = 'etudsouleumane90@gmail.com'; //put your email here
-
-    $email_template = 'simple.html';
-
-    $subject    = strip_tags($_POST['subject']);
-    $email       = strip_tags($_POST['email']);
-    $phone      = strip_tags($_POST['phone']);
-    $name       = strip_tags($_POST['name']);
-    $message    = nl2br( htmlspecialchars($_POST['message'], ENT_QUOTES) );
-    $result     = array();
-
-
-    if(empty($name)){
-
-        $result = array( 'response' => 'error', 'empty'=>'name', 'message'=>'<strong>Error!</strong> Name is empty.' );
-        echo json_encode($result );
-        die;
-    } 
-
-    if(empty($email)){
-
-        $result = array( 'response' => 'error', 'empty'=>'email', 'message'=>'<strong>Error!</strong> Email is empty.' );
-        echo json_encode($result );
-        die;
-    } 
-
-    if(empty($message)){
-
-         $result = array( 'response' => 'error', 'empty'=>'message', 'message'=>'<strong>Error!</strong> Message body is empty.' );
-         echo json_encode($result );
-         die;
+        $retour=mail("etudsouleymane90@gmail.com", $_POST['subject'], $message,
+        "From:souleymanekamara4@gmail.com"."\r\n"."Reply-to:". $_POST['email']);
+        if($retour){
+        echo "<script> 
+                alert('your message has been sent successfully');
+                document.location.href = 'contact.html';
+              </script>";
+    }else{
+        echo "<script> 
+                alert('your message was not sent');
+                document.location.href = 'contact.html';
+              </script>"; 
     }
-
-    $headers  = "From: " . $name . ' <' . $email . '>' . "\r\n";
-    $headers .= "Reply-To: ". $email . "\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-
-    $templateTags =  array(
-        '{{subject}}' => $subject,
-        '{{email}}'=>$email,
-        '{{message}}'=>$message,
-        '{{name}}'=>$name,
-        '{{phone}}'=>$phone
-        );
-
-
-    $templateContents = file_get_contents( dirname(__FILE__) . '/email-templates/'.$email_template);
-
-    $contents =  strtr($templateContents, $templateTags);
-
-    if ( mail( $to, $subject, $contents, $headers ) ) {
-        $result = array( 'response' => 'success', 'message'=>'<strong>Success!</strong> Mail Sent.' );
-    } else {
-        $result = array( 'response' => 'error', 'message'=>'<strong>Error!</strong> Cann\'t Send Mail.'  );
     }
-
-    echo json_encode( $result );
-
-    die;
+    ?>
