@@ -5961,9 +5961,10 @@ textarea, select {
           .footer-section .footer-container .footer-wrapper .wrapper-option li a:hover {
             color: #48c7ec; }
   .footer-section .copy-right {
-    background-color: #03045e;
+    background-color: #021030;
     padding: 16px 0;
-    border-top: 1px solid #203548; }
+    /* border-top: 1px solid #203548; */
+   }
     .footer-section .copy-right p {
       font-size: 16px;
       margin-bottom: 0; }
